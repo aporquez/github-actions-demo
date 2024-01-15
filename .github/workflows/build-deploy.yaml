@@ -1,0 +1,39 @@
+name: .NET Core
+
+on: [push]
+
+env:
+  AZURE_WEBAPP_NAME: my-app    # set this to your application's name
+  AZURE_WEBAPP_PACKAGE_PATH: '.'      # set this to the path to your web app project, defaults to the repository root
+  DOTNET_VERSION: '8.0.x'           # set this to the dot net version to use
+  DOTNET_RUNTIME: 'linux-x64'
+  PUBLISH_PROJECT_PATH: 'src/MyAzureWebApp/MyAzureWebApp.csproj'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repo
+      - uses: actions/checkout@main
+   
+      # Setup .NET Core SDK
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }} 
+      
+      # Run dotnet build and publish
+      - name: dotnet build and publish
+        run: |
+          dotnet restore
+          dotnet build -c Release
+          dotnet publish '${{ env.PUBLISH_PROJECT_PATH }}' --no-restore -c Release -r ${{ env.DOTNET_RUNTIME }} -o release/
+          cd release/
+          zip -r myapp.zip .
+
+      # Publish artifact
+      - uses: actions/upload-artifact@v4
+        with:
+          name: demo
+          path: release/myapp.zip
