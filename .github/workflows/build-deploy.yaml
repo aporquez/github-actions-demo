@@ -26,8 +26,8 @@ jobs:
       # Run dotnet build and publish
       - name: dotnet build and publish
         run: |
-          dotnet restore -r ${{ env.DOTNET_RUNTIME }}
-          dotnet build -c Release -r ${{ env.DOTNET_RUNTIME }}
+          dotnet restore '${{ env.PUBLISH_PROJECT_PATH }}'
+          dotnet build '${{ env.PUBLISH_PROJECT_PATH }}' -c Release
           dotnet publish '${{ env.PUBLISH_PROJECT_PATH }}' --no-restore -c Release -f net8.0 -r ${{ env.DOTNET_RUNTIME }} -o release/
           cd release/
           zip -r myapp.zip .
