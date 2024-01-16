@@ -1,6 +1,12 @@
 name: .NET Core
 
-on: [push]
+on:  
+  push:
+    branches:
+      - 'main'
+  pull_request:
+    branches:
+      - 'main'
 
 env:
   AZURE_WEBAPP_NAME: porquez-demo    # set this to your application's name
