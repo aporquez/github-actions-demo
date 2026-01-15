@@ -57,6 +57,8 @@ Service. You can also use the azure portal to create the resource.
     }
     ```
 ## Setup GitHub
+
+This is a test
 1.  Go to GitHub, click on this repository's **Secrets and variables > Actions** in the Settings tab.
 1.  Click **New repository secret**.
 1.  Name the secret **AZURE_CREDENTIALS** and paste the entire contents from the terminal command you entered previously.
